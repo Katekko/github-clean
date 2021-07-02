@@ -14,11 +14,11 @@ class Initializer {
   static Future<void> init() async {
     try {
       WidgetsFlutterBinding.ensureInitialized();
+      _initGitHub();
       await _initStorage();
       _initGetConnect();
       _initGlobalLoading();
       _initScreenPreference();
-      _initGitHub();
     } catch (err) {
       rethrow;
     }
@@ -79,6 +79,6 @@ class Initializer {
   static void _initGitHub() {
     final env = ConfigEnvironments.getEnvironments();
     final github = GitHub(auth: Authentication.withToken(env['token-git']));
-    Get.put(() => github);
+    Get.put(github);
   }
 }
