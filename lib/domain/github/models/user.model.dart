@@ -1,8 +1,7 @@
 import 'package:github/github.dart';
 
 class UserModel {
-  final String name, email;
-  final String? picture;
+  final String name, email, picture;
   const UserModel({
     required this.name,
     required this.email,
@@ -13,7 +12,7 @@ class UserModel {
     return UserModel(
       name: data.login ?? '',
       email: data.email ?? '',
-      picture: data.avatarUrl,
+      picture: data.avatarUrl!,
     );
   }
 }

@@ -20,6 +20,7 @@ dependencies:
 
   github: ^8.1.1
   search_page: ^2.0.0+1
+  cached_network_image: ^3.0.0
 
 dev_dependencies:
   flutter_test:

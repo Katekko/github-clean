@@ -11,8 +11,10 @@ class HomeScreen extends GetView<HomeController> {
     return Scaffold(
       appBar: SearchAppBar(),
       body: Obx(
-        () => ListView.builder(
+        () => ListView.separated(
           itemCount: controller.users.length,
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
+          separatorBuilder: (_, __) => const SizedBox(height: 10),
           itemBuilder: (_, index) => UserListItemWidget(
             controller.users[index],
           ),
