@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gyanburuworld.ekko_app">
+    package="com.example.mobile_challenge">
    <application
-        android:label="ekko_app"
+        android:label="mobile_challenge"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

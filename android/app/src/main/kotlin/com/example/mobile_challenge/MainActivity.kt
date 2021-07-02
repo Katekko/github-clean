@@ -1,4 +1,4 @@
-package com.gyanburuworld.ekko_app
+package com.example.mobile_challenge
 
 import io.flutter.embedding.android.FlutterActivity
 

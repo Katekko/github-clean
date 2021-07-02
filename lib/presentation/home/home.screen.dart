@@ -13,14 +13,7 @@ class HomeScreen extends GetView<HomeController> {
           title: const Text('HomeScreen'),
           centerTitle: true,
         ),
-        body: Center(
-          child: Obx(
-            () => Text(
-              'Logado com: ${controller.user.value?.name ?? 'Ops'}',
-              style: const TextStyle(fontSize: 20),
-            ),
-          ),
-        ),
+        body: const Center(child: Text('', style: TextStyle(fontSize: 20))),
       ),
     );
   }

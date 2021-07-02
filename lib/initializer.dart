@@ -1,14 +1,12 @@
-import 'package:ekko/domain/core/utils/snackbar.util.dart';
-import 'package:ekko/infrastructure/navigation/bindings/domains/auth.repository.binding.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:github/github.dart';
 import 'package:logger/logger.dart';
 
 import 'config.dart';
 import 'domain/core/constants/storage.constants.dart';
-import 'infrastructure/navigation/routes.dart';
 
 import 'presentation/shared/loading/loading.controller.dart';
 
@@ -20,6 +18,7 @@ class Initializer {
       _initGetConnect();
       _initGlobalLoading();
       _initScreenPreference();
+      _initGitHub();
     } catch (err) {
       rethrow;
     }
@@ -45,14 +44,14 @@ class Initializer {
 
     connect.httpClient.addResponseModifier(
       (request, response) async {
-        if (response.statusCode == 401) {
-          final authDomainBinding = AuthRepositoryBinding();
-          await authDomainBinding.repository.logoutUser();
-          Get.offAllNamed(Routes.LOGIN);
-          SnackbarUtil.showWarning(
-            message: 'Faça login novamente para continuar utilizando o sistema',
-          );
-        }
+        // if (response.statusCode == 401) {
+        //   final authDomainBinding = AuthRepositoryBinding();
+        //   await authDomainBinding.repository.logoutUser();
+        //   Get.offAllNamed(Routes.LOGIN);
+        //   SnackbarUtil.showWarning(
+        //     message: 'Faça login novamente para continuar utilizando o sistema',
+        //   );
+        // }
       },
     );
 
@@ -75,5 +74,11 @@ class Initializer {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+  }
+
+  static void _initGitHub() {
+    final env = ConfigEnvironments.getEnvironments();
+    final github = GitHub(auth: Authentication.withToken(env['token-git']));
+    Get.put(() => github);
   }
 }

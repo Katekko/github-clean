@@ -11,18 +11,22 @@ class ConfigEnvironments {
     {
       'env': Environments.LOCAL,
       'url': 'http://192.168.0.2:5000/api/',
+      'token-git': '',
     },
     {
       'env': Environments.DEV,
       'url': '',
+      'token-git': '',
     },
     {
       'env': Environments.QAS,
       'url': '',
+      'token-git': '',
     },
     {
       'env': Environments.PRODUCTION,
       'url': 'https://api-ekko.herokuapp.com/api/',
+      'token-git': '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',
     },
   ];
 
