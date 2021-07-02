@@ -8,11 +8,14 @@ class GitHubRepository {
       : _gitHubService = gitHubService;
 
   Future<List<UserModel>> getUsers({
-    required String term,
+    required String searchText,
     required int page,
   }) async {
     try {
-      final response = await _gitHubService.getUsers(page: page, term: term);
+      final response = await _gitHubService.getUsers(
+        page: page,
+        term: searchText,
+      );
       final models = response.map((e) => UserModel.fromData(e)).toList();
       return models;
     } catch (err) {

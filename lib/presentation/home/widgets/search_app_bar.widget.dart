@@ -10,35 +10,63 @@ class SearchAppBar extends GetView<HomeController>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Material(
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Visibility(
-              visible: false,
-              replacement: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Image.asset(
-                  'assets/images/github.png',
-                  width: 30,
-                  color: Colors.white,
+      child: Obx(
+        () => AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          color: controller.searchMode.value ? Colors.white54 : Colors.black,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Visibility(
+                visible: controller.searchMode.value,
+                replacement: Padding(
+                  padding: const EdgeInsets.only(left: 9, right: 9),
+                  child: Image.asset(
+                    'assets/images/github.png',
+                    width: 30,
+                    color: Colors.white,
+                  ),
+                ),
+                child: BackButton(onPressed: controller.desactiveSearchMode),
+              ),
+              Flexible(
+                child: Visibility(
+                  visible: !controller.searchMode.value,
+                  replacement: _SearchTextFieldWidget(),
+                  child: const Text(
+                    'GitHub Accounts',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
                 ),
               ),
-              child: const BackButton(),
-            ),
-            const Text(
-              'GitHub Accounts',
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.search),
-              color: Colors.white,
-            )
-          ],
+              Visibility(
+                visible: !controller.searchMode.value,
+                replacement: IconButton(
+                  onPressed: controller.clearSearchText,
+                  icon: const Icon(Icons.close),
+                ),
+                child: IconButton(
+                  onPressed: controller.activeSearchMode,
+                  icon: const Icon(Icons.search),
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _SearchTextFieldWidget extends GetView<HomeController> {
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onChanged: controller.searchText,
+      controller: controller.searchTextController,
+      focusNode: controller.searchTextFocus,
+      decoration: const InputDecoration(isDense: true),
     );
   }
 }
