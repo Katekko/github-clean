@@ -11,7 +11,7 @@ class UserModel {
 
   factory UserModel.fromData(User data) {
     return UserModel(
-      name: data.name ?? '',
+      name: data.login ?? '',
       email: data.email ?? '',
       picture: data.avatarUrl,
     );

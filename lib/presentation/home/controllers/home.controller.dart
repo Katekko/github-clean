@@ -19,7 +19,9 @@ class HomeController extends GetxController {
     super.onReady();
     try {
       _loading.isLoading = true;
-      await _gitHubRepository.getUsers(page: 1, term: term.value);
+      users.assignAll(
+        await _gitHubRepository.getUsers(page: 1, term: term.value),
+      );
     } catch (err) {
       SnackbarUtil.showError(message: err.toString());
       rethrow;
