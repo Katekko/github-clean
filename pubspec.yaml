@@ -1,0 +1,32 @@
+name: ekko
+description: A boilerplate for your project starts right.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  
+  get: ^4.1.4
+  get_storage: ^2.0.2
+  logger: ^1.0.0
+
+  github: ^8.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  lint: ^1.5.3
+  build_runner: ^1.12.2
+  json_serializable: ^4.0.3
+
+flutter:
+  uses-material-design: true
