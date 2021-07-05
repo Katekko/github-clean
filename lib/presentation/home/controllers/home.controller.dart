@@ -62,6 +62,6 @@ class HomeController extends GetxController {
   }
 
   void openProfile(UserModel user) {
-    Get.toNamed(Routes.USER_DIALOG, arguments: {'userName': user.name});
+    Get.toNamed(Routes.USER_DIALOG, arguments: {'userLogin': user.login});
   }
 }

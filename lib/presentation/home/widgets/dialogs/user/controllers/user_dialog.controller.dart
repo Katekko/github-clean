@@ -5,25 +5,27 @@ import 'package:get/get.dart';
 
 class UserDialogController extends GetxController {
   final GitHubRepository _gitHubRepository;
-  var _userName = '';
+  var _userLogin = '';
 
   final user = Rxn<UserModel>();
 
   UserDialogController({required GitHubRepository gitHubRepository})
       : _gitHubRepository = gitHubRepository {
-    final name = Get.arguments['userName'] as String;
-    _userName = name;
+    final name = Get.arguments['userLogin'] as String;
+    _userLogin = name;
   }
 
   @override
   void onReady() {
     super.onReady();
-    // getUserByName();
+    getUserByLogin();
   }
 
-  Future<void> getUserByName() async {
+  Future<void> getUserByLogin() async {
     try {
-      final response = await _gitHubRepository.getUserByName(name: _userName);
+      final response = await _gitHubRepository.getUserByLogin(
+        login: _userLogin,
+      );
       user.value = response;
     } catch (err) {
       SnackbarUtil.showError(message: err.toString());

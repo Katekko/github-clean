@@ -24,7 +24,7 @@ class UserListItemWidget extends GetView<HomeController> {
         onPressed: () {},
         icon: const Icon(Icons.favorite),
       ),
-      title: Text(user.name),
+      title: Text(user.login),
     );
   }
 }

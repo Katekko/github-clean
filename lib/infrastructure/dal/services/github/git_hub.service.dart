@@ -30,9 +30,9 @@ class GitHubService {
     }
   }
 
-  Future<User> getUserByLogin({required String name}) async {
+  Future<User> getUserByLogin({required String login}) async {
     try {
-      final response = await _gitHub.users.getUser(name);
+      final response = await _gitHub.users.getUser(login);
       return response;
     } catch (err) {
       rethrow;

@@ -1,6 +1,8 @@
 import 'package:ekko/domain/github/models/user.model.dart';
 import 'package:ekko/infrastructure/dal/services/github/git_hub.service.dart';
 
+import 'models/user_profile.model.dart';
+
 class GitHubRepository {
   final GitHubService _gitHubService;
 
@@ -23,10 +25,10 @@ class GitHubRepository {
     }
   }
 
-  Future<UserModel> getUserByName({required String name}) async {
+  Future<UserProfileModel> getUserByLogin({required String login}) async {
     try {
-      final response = await _gitHubService.getUserByLogin(name: name);
-      final models = UserModel.fromData(response);
+      final response = await _gitHubService.getUserByLogin(login: login);
+      final models = UserProfileModel.fromData(response);
       return models;
     } catch (err) {
       rethrow;

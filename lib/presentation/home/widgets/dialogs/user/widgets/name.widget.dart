@@ -9,7 +9,7 @@ class NameWidget extends GetView<UserDialogController> {
     return Obx(
       () {
         if (controller.user.value != null) {
-          return Text(controller.user.value!.name);
+          return Text(controller.user.value!.login);
         } else {
           return SizedBox(
             width: MediaQuery.of(context).size.width * .5,
@@ -19,9 +19,7 @@ class NameWidget extends GetView<UserDialogController> {
               highlightColor: Colors.white38,
               child: Container(
                 margin: const EdgeInsets.only(top: 20),
-                decoration: const BoxDecoration(
-                  color: Colors.grey,
-                ),
+                decoration: const BoxDecoration(color: Colors.grey),
               ),
             ),
           );
