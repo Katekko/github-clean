@@ -12,6 +12,7 @@ class UserListItemWidget extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => controller.openProfile(user),
+      contentPadding: const EdgeInsets.only(top: 5, bottom: 5, left: 8),
       leading: CachedNetworkImage(
         imageUrl: user.picture,
         progressIndicatorBuilder: (_, __, download) {

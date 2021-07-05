@@ -1,7 +1,6 @@
 import 'package:ekko/domain/core/utils/snackbar.util.dart';
 import 'package:ekko/domain/github/git_hub.repository.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
-import 'package:ekko/presentation/shared/loading/loading.controller.dart';
 import 'package:get/get.dart';
 
 class UserDialogController extends GetxController {
@@ -19,7 +18,7 @@ class UserDialogController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    getUserByName();
+    // getUserByName();
   }
 
   Future<void> getUserByName() async {
