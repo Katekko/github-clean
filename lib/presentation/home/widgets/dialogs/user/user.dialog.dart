@@ -31,7 +31,6 @@ class UserDialog extends GetView<UserDialogController> {
                     InfoWidget(),
                   ],
                 ),
-                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: BioWidget(),

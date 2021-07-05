@@ -62,6 +62,7 @@ class HomeController extends GetxController {
   }
 
   void openProfile(UserModel user) {
+    Get.focusScope?.unfocus();
     Get.toNamed(Routes.USER_DIALOG, arguments: {'userLogin': user.login});
   }
 }
