@@ -16,7 +16,7 @@ class Nav {
       page: () => UserDialog(),
       binding: UserDialogControllerBinding(),
       opaque: false,
-      transition: Transition.zoom,
+      transition: Transition.fadeIn,
     ),
   ];
 }

@@ -2,8 +2,7 @@ import 'package:ekko/domain/github/models/user.model.dart';
 import 'package:github/github.dart';
 
 class UserProfileModel extends UserModel {
-  final String nickname, location, email;
-  final String? bio;
+  final String? bio, email, location, nickname;
 
   UserProfileModel({
     required String login,
@@ -17,11 +16,11 @@ class UserProfileModel extends UserModel {
   factory UserProfileModel.fromData(User data) {
     return UserProfileModel(
       login: data.login!,
-      email: data.email!,
       picture: data.avatarUrl!,
-      location: data.location!,
-      nickname: data.name!,
+      location: data.location,
+      nickname: data.name,
       bio: data.bio,
+      email: data.email,
     );
   }
 }

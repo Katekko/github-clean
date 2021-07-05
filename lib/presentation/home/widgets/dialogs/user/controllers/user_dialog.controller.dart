@@ -1,13 +1,13 @@
 import 'package:ekko/domain/core/utils/snackbar.util.dart';
 import 'package:ekko/domain/github/git_hub.repository.dart';
-import 'package:ekko/domain/github/models/user.model.dart';
+import 'package:ekko/domain/github/models/user_profile.model.dart';
 import 'package:get/get.dart';
 
 class UserDialogController extends GetxController {
   final GitHubRepository _gitHubRepository;
   var _userLogin = '';
 
-  final user = Rxn<UserModel>();
+  final user = Rxn<UserProfileModel>();
 
   UserDialogController({required GitHubRepository gitHubRepository})
       : _gitHubRepository = gitHubRepository {

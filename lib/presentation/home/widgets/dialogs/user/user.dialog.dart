@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 
 import 'controllers/user_dialog.controller.dart';
 import 'widgets/avatar_image.widget.dart';
-import 'widgets/name.widget.dart';
+import 'widgets/bio.widget.dart';
+import 'widgets/info.widget.dart';
 
 class UserDialog extends GetView<UserDialogController> {
   @override
@@ -14,18 +15,29 @@ class UserDialog extends GetView<UserDialogController> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         color: Colors.black.withOpacity(.4),
-        child: Dialog(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AvatarImageWidget(),
-                  NameWidget(),
-                ],
-              ),
-            ],
+        child: GestureDetector(
+          onTap: () {},
+          child: Dialog(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: AvatarImageWidget(),
+                    ),
+                    InfoWidget(),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: BioWidget(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
