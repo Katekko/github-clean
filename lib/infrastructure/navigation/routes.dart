@@ -4,4 +4,5 @@ class Routes {
   }
 
   static const HOME = '/home';
+  static const USER_DIALOG = '/home/user-dialog';
 }

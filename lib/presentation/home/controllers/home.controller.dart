@@ -1,6 +1,7 @@
 import 'package:ekko/domain/core/utils/snackbar.util.dart';
 import 'package:ekko/domain/github/git_hub.repository.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
+import 'package:ekko/infrastructure/navigation/routes.dart';
 import 'package:ekko/presentation/shared/loading/loading.controller.dart';
 import 'package:flutter/material.dart';
 
@@ -58,5 +59,9 @@ class HomeController extends GetxController {
     } finally {
       _loading.isLoading = false;
     }
+  }
+
+  void openProfile(UserModel user) {
+    Get.toNamed(Routes.USER_DIALOG, arguments: {'userName': user.name});
   }
 }

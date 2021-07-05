@@ -22,4 +22,14 @@ class GitHubRepository {
       rethrow;
     }
   }
+
+  Future<UserModel> getUserByName({required String name}) async {
+    try {
+      final response = await _gitHubService.getUserByLogin(name: name);
+      final models = UserModel.fromData(response);
+      return models;
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

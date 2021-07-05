@@ -11,5 +11,12 @@ class Nav {
       page: () => HomeScreen(),
       binding: HomeControllerBinding(),
     ),
+    GetPage(
+      name: Routes.USER_DIALOG,
+      page: () => UserDialog(),
+      binding: UserDialogControllerBinding(),
+      opaque: false,
+      transition: Transition.zoom,
+    ),
   ];
 }
