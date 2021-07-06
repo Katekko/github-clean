@@ -1,3 +1,4 @@
+import 'package:ekko/domain/core/mixins/object_box_dao.mixin.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -81,4 +82,6 @@ class Initializer {
     final github = GitHub(auth: Authentication.withToken(env['token-git']));
     Get.put(github);
   }
+
+  static void _initObjectBox() {}
 }
