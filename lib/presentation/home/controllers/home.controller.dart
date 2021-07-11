@@ -17,19 +17,26 @@ class HomeController extends GetxController {
   final searchTextFocus = FocusNode();
   final searchTextController = TextEditingController();
 
+  final showOnlyFavs = false.obs;
+
   HomeController({required GitHubRepository gitHubRepository})
       : _gitHubRepository = gitHubRepository;
 
   @override
   void onInit() {
     super.onInit();
-    debounce(searchText, searchUsers, time: const Duration(milliseconds: 500));
+    debounce(
+      searchText,
+      (_) => getUsers(),
+      time: const Duration(milliseconds: 500),
+    );
+    ever<bool>(showOnlyFavs, (_) => getUsers());
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
-    searchUsers(searchTextController.text);
+    getUsers();
   }
 
   void activeSearchMode() {
@@ -47,11 +54,15 @@ class HomeController extends GetxController {
     searchTextController.clear();
   }
 
-  Future<void> searchUsers(String searchText) async {
+  Future<void> getUsers() async {
     try {
       _loading.isLoading = true;
       users.assignAll(
-        await _gitHubRepository.getUsers(page: 1, searchText: searchText),
+        await _gitHubRepository.getUsers(
+          page: 1,
+          searchText: searchText.value,
+          onlyFavs: showOnlyFavs.value,
+        ),
       );
     } catch (err) {
       SnackbarUtil.showError(message: err.toString());
@@ -64,10 +75,15 @@ class HomeController extends GetxController {
   Future<void> openProfile(UserModel user) async {
     Get.focusScope?.unfocus();
     await Get.toNamed(Routes.USER_DIALOG, arguments: {'userLogin': user.login});
-    searchUsers(searchTextController.text);
+    getUsers();
   }
 
-  void toogleUser(UserModel user) {
+  void toogleFavUser(UserModel user) {
     _gitHubRepository.toogleFavUser(user: user);
+    getUsers();
+  }
+
+  void toogleShowOnlyFavs() {
+    showOnlyFavs.value = !showOnlyFavs.value;
   }
 }

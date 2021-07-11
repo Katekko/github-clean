@@ -16,6 +16,7 @@ class UserListItemWidget extends GetView<HomeController> {
       contentPadding: const EdgeInsets.only(top: 5, bottom: 5, left: 8),
       leading: CachedNetworkImage(
         imageUrl: user.picture,
+        useOldImageOnUrlChange: true,
         progressIndicatorBuilder: (_, __, download) {
           return CircularProgressIndicator(value: download.progress);
         },
@@ -23,7 +24,7 @@ class UserListItemWidget extends GetView<HomeController> {
       ),
       trailing: FavButtonWidget(
         isFav: user.isFav,
-        onTap: () => controller.toogleUser(user),
+        onTap: () => controller.toogleFavUser(user),
       ),
       title: Text(user.login),
     );
