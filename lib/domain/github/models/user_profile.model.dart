@@ -1,4 +1,6 @@
+import 'package:ekko/domain/core/mixins/object_box.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
+import 'package:ekko/objectbox.g.dart';
 import 'package:get/get.dart';
 import 'package:github/github.dart';
 
@@ -24,16 +26,19 @@ class UserProfileModel extends UserModel {
         );
 
   factory UserProfileModel.fromData(User data) {
+    final list = ObjectBox.select(UserDao_.serverId.equals(data.id!));
+    final dao = list.isNotEmpty ? list.first : null;
+
     return UserProfileModel(
       id: data.id!,
-      localId: 0,
+      localId: dao?.id ?? 0,
       login: data.login!,
       picture: data.avatarUrl!,
       location: data.location,
       nickname: data.name,
       bio: data.bio,
       email: data.email,
-      isFav: false.obs,
+      isFav: dao?.isFav.obs ?? false.obs,
     );
   }
 }

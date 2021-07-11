@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
 import 'package:ekko/presentation/home/controllers/home.controller.dart';
+import 'package:ekko/presentation/shared/loading/fav_button.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,13 +21,9 @@ class UserListItemWidget extends GetView<HomeController> {
         },
         errorWidget: (_, __, ___) => const Icon(Icons.error),
       ),
-      trailing: Obx(
-        () => IconButton(
-          onPressed: () => controller.toogleUser(user),
-          icon: user.isFav.value
-              ? const Icon(Icons.favorite, color: Colors.red)
-              : const Icon(Icons.favorite),
-        ),
+      trailing: FavButtonWidget(
+        isFav: user.isFav,
+        onTap: () => controller.toogleUser(user),
       ),
       title: Text(user.login),
     );

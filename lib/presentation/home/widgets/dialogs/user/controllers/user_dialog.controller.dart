@@ -32,4 +32,8 @@ class UserDialogController extends GetxController {
       rethrow;
     }
   }
+
+  void toogleFavUser() {
+    _gitHubRepository.toogleFavUser(user: user.value!);
+  }
 }

@@ -61,9 +61,10 @@ class HomeController extends GetxController {
     }
   }
 
-  void openProfile(UserModel user) {
+  Future<void> openProfile(UserModel user) async {
     Get.focusScope?.unfocus();
-    Get.toNamed(Routes.USER_DIALOG, arguments: {'userLogin': user.login});
+    await Get.toNamed(Routes.USER_DIALOG, arguments: {'userLogin': user.login});
+    searchUsers(searchTextController.text);
   }
 
   void toogleUser(UserModel user) {
