@@ -1,4 +1,3 @@
-import 'package:ekko/domain/core/mixins/object_box_dao.mixin.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import 'package:logger/logger.dart';
 import 'config.dart';
 import 'domain/core/constants/storage.constants.dart';
 
+import 'objectbox.g.dart';
 import 'presentation/shared/loading/loading.controller.dart';
 
 class Initializer {
@@ -20,6 +20,7 @@ class Initializer {
       _initGetConnect();
       _initGlobalLoading();
       _initScreenPreference();
+      await _initObjectBox();
     } catch (err) {
       rethrow;
     }
@@ -83,5 +84,8 @@ class Initializer {
     Get.put(github);
   }
 
-  static void _initObjectBox() {}
+  static Future<void> _initObjectBox() async {
+    final store = await openStore();
+    Get.put(store);
+  }
 }

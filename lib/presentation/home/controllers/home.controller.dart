@@ -65,4 +65,8 @@ class HomeController extends GetxController {
     Get.focusScope?.unfocus();
     Get.toNamed(Routes.USER_DIALOG, arguments: {'userLogin': user.login});
   }
+
+  void toogleUser(UserModel user) {
+    _gitHubRepository.toogleFavUser(user: user);
+  }
 }

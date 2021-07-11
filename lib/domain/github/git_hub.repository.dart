@@ -34,4 +34,13 @@ class GitHubRepository {
       rethrow;
     }
   }
+
+  Future<void> toogleFavUser({required UserModel user}) async {
+    try {
+      user.isFav.value = !user.isFav.value;
+      user.save();
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

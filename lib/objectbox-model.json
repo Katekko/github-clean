@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:5777085103518739101",
-      "lastPropertyId": "4:8403739755386040980",
+      "lastPropertyId": "5:1466719881978157033",
       "name": "UserDao",
       "properties": [
         {
@@ -28,6 +28,11 @@
           "id": "4:8403739755386040980",
           "name": "isFav",
           "type": 1
+        },
+        {
+          "id": "5:1466719881978157033",
+          "name": "serverId",
+          "type": 6
         }
       ],
       "relations": []

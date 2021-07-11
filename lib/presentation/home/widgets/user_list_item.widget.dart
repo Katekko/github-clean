@@ -20,9 +20,13 @@ class UserListItemWidget extends GetView<HomeController> {
         },
         errorWidget: (_, __, ___) => const Icon(Icons.error),
       ),
-      trailing: IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.favorite),
+      trailing: Obx(
+        () => IconButton(
+          onPressed: () => controller.toogleUser(user),
+          icon: user.isFav.value
+              ? const Icon(Icons.favorite, color: Colors.red)
+              : const Icon(Icons.favorite),
+        ),
       ),
       title: Text(user.login),
     );

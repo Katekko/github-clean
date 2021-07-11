@@ -7,6 +7,7 @@ class UserProfileModel extends UserModel {
 
   UserProfileModel({
     required int id,
+    required int localId,
     required String login,
     required String picture,
     required RxBool isFav,
@@ -14,11 +15,18 @@ class UserProfileModel extends UserModel {
     required this.bio,
     required this.location,
     required this.nickname,
-  }) : super(id: id, picture: picture, login: login, isFav: isFav);
+  }) : super(
+          serverId: id,
+          localId: localId,
+          picture: picture,
+          login: login,
+          isFav: isFav,
+        );
 
   factory UserProfileModel.fromData(User data) {
     return UserProfileModel(
       id: data.id!,
+      localId: 0,
       login: data.login!,
       picture: data.avatarUrl!,
       location: data.location,
