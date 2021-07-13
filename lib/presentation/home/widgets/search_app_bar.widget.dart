@@ -1,6 +1,3 @@
-import 'package:ekko/domain/core/mixins/object_box.dart';
-import 'package:ekko/domain/core/utils/snackbar.util.dart';
-import 'package:ekko/infrastructure/dal/daos/user.dao.dart';
 import 'package:ekko/presentation/home/controllers/home.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,10 +22,6 @@ class SearchAppBar extends GetView<HomeController>
                 replacement: Padding(
                   padding: const EdgeInsets.only(left: 9, right: 9),
                   child: GestureDetector(
-                    onLongPress: () {
-                      ObjectBox.clear<UserDao>();
-                      SnackbarUtil.showSuccess(message: 'Box cleared');
-                    },
                     child: Image.asset(
                       'assets/images/github.png',
                       width: 30,

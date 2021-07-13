@@ -1,4 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ekko/domain/core/abstractions/database.interface.dart';
+import 'package:ekko/domain/core/mixins/object_box.dart';
+import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -18,13 +21,13 @@ class Initializer {
   static Future<void> init() async {
     try {
       WidgetsFlutterBinding.ensureInitialized();
-      _initGitHub();
       await _initStorage();
+      await _initDatabase();
+      await _initConnectivity();
+      _initGitHub();
       _initGetConnect();
       _initGlobalLoading();
       _initScreenPreference();
-      await _initObjectBox();
-      await _initConnectivity();
     } catch (err) {
       rethrow;
     }
@@ -91,6 +94,11 @@ class Initializer {
   static Future<void> _initObjectBox() async {
     final store = await openStore();
     Get.put(store);
+  }
+
+  static Future<void> _initDatabase() async {
+    await _initObjectBox();
+    Get.lazyPut<IDatabase<UserEntity>>(() => ObjectBox());
   }
 
   static Future<void> _initConnectivity() async {

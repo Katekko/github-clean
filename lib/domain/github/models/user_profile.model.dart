@@ -1,5 +1,6 @@
-import 'package:ekko/domain/core/mixins/object_box.dart';
+import 'package:ekko/domain/core/abstractions/database.interface.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
+import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
 import 'package:ekko/objectbox.g.dart';
 import 'package:get/get.dart';
 import 'package:github/github.dart';
@@ -26,7 +27,8 @@ class UserProfileModel extends UserModel {
         );
 
   factory UserProfileModel.fromData(User data) {
-    final list = ObjectBox.select(UserDao_.serverId.equals(data.id!));
+    final userDao = Get.find<IDatabase<UserEntity>>();
+    final list = userDao.select(UserEntity_.serverId.equals(data.id!));
     final dao = list.isNotEmpty ? list.first : null;
 
     return UserProfileModel(

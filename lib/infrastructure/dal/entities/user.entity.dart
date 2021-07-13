@@ -1,8 +1,8 @@
-import 'package:ekko/domain/core/abstractions/base_dao.interface.dart';
+import 'package:ekko/domain/core/abstractions/base_entity.interface.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class UserDao implements IBaseDao {
+class UserEntity implements IBaseEntity {
   @override
   int id;
 
@@ -12,7 +12,7 @@ class UserDao implements IBaseDao {
   final String login, picture;
   final bool isFav;
 
-  UserDao({
+  UserEntity({
     required this.id,
     required this.serverId,
     required this.login,

@@ -4,49 +4,57 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:5777085103518739101",
-      "lastPropertyId": "5:1466719881978157033",
-      "name": "UserDao",
+      "id": "2:759807388429677487",
+      "lastPropertyId": "5:1936270279885302404",
+      "name": "UserEntity",
       "properties": [
         {
-          "id": "1:3330028980447356288",
+          "id": "1:4291651565825156564",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:4707356818242426002",
+          "id": "2:7046820791570936124",
+          "name": "serverId",
+          "type": 6
+        },
+        {
+          "id": "3:939930319820280567",
           "name": "login",
           "type": 9
         },
         {
-          "id": "3:3134867676665698374",
+          "id": "4:1330634095848047167",
           "name": "picture",
           "type": 9
         },
         {
-          "id": "4:8403739755386040980",
+          "id": "5:1936270279885302404",
           "name": "isFav",
           "type": 1
-        },
-        {
-          "id": "5:1466719881978157033",
-          "name": "serverId",
-          "type": 6
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "1:5777085103518739101",
+  "lastEntityId": "2:759807388429677487",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    5777085103518739101
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    3330028980447356288,
+    4707356818242426002,
+    3134867676665698374,
+    8403739755386040980,
+    1466719881978157033
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

@@ -1,14 +1,16 @@
-import 'package:ekko/domain/core/abstractions/base_dao.interface.dart';
+import 'package:ekko/domain/core/abstractions/base_entity.interface.dart';
+import 'package:ekko/domain/core/abstractions/database.interface.dart';
 import 'package:get/get.dart' as g;
 import 'package:ekko/objectbox.g.dart';
 
-abstract class ObjectBox<T extends IBaseDao> {
+class ObjectBox<T extends IBaseEntity> implements IDatabase<T> {
   static final _store = g.Get.find<Store>();
   static Box<T> _box<T>() {
     return _store.box<T>();
   }
 
-  static int save<T extends IBaseDao>(T dao) {
+  @override
+  int save(T dao) {
     try {
       final id = _box<T>().put(dao);
       return id;
@@ -17,7 +19,8 @@ abstract class ObjectBox<T extends IBaseDao> {
     }
   }
 
-  static List<T> selectAll<T extends IBaseDao>() {
+  @override
+  List<T> selectAll() {
     try {
       final list = _box<T>().getAll();
       return list;
@@ -26,7 +29,8 @@ abstract class ObjectBox<T extends IBaseDao> {
     }
   }
 
-  static T? selectByLocalId<T extends IBaseDao>(int id) {
+  @override
+  T? selectByLocalId(int id) {
     try {
       final dao = _box<T>().get(id);
       return dao;
@@ -35,7 +39,8 @@ abstract class ObjectBox<T extends IBaseDao> {
     }
   }
 
-  static List<T> select<T extends IBaseDao>(Condition<T>? condition) {
+  @override
+  List<T> select(Condition<T>? condition) {
     try {
       final builder = _box<T>().query(condition);
       final query = builder.build();
@@ -46,7 +51,8 @@ abstract class ObjectBox<T extends IBaseDao> {
     }
   }
 
-  static bool remove<T extends IBaseDao>(T dao) {
+  @override
+  bool remove(T dao) {
     try {
       final success = _box<T>().remove(dao.id);
       return success;
@@ -55,5 +61,6 @@ abstract class ObjectBox<T extends IBaseDao> {
     }
   }
 
-  static void clear<T extends IBaseDao>() => _box<T>().removeAll();
+  @override
+  void clear() => _box<T>().removeAll();
 }

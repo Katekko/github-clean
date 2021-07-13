@@ -1,13 +1,15 @@
-import 'package:ekko/domain/core/mixins/object_box.dart';
+import 'package:ekko/domain/core/abstractions/database.interface.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
-import 'package:ekko/infrastructure/dal/daos/user.dao.dart';
+import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
 import 'package:ekko/infrastructure/dal/services/github/git_hub.service.dart';
 import 'package:ekko/objectbox.g.dart';
+import 'package:get/get.dart';
 
 import 'models/user_profile.model.dart';
 
 class GitHubRepository {
   final GitHubService _gitHubService;
+  final userDao = Get.find<IDatabase<UserEntity>>();
 
   GitHubRepository({required GitHubService gitHubService})
       : _gitHubService = gitHubService;
@@ -19,13 +21,13 @@ class GitHubRepository {
   }) async {
     try {
       if (onlyFavs) {
-        late List<UserDao> daos;
+        late List<UserEntity> daos;
         if (searchText.isNotEmpty) {
-          daos = ObjectBox.select(
-            UserDao_.login.contains(searchText, caseSensitive: false),
+          daos = userDao.select(
+            UserEntity_.login.contains(searchText, caseSensitive: false),
           );
         } else {
-          daos = ObjectBox.selectAll<UserDao>();
+          daos = userDao.selectAll();
         }
 
         final models = daos.map((e) => UserModel.fromDao(e)).toList();
