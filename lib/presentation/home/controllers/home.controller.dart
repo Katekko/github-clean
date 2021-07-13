@@ -2,6 +2,7 @@ import 'package:ekko/domain/core/utils/snackbar.util.dart';
 import 'package:ekko/domain/github/git_hub.repository.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
 import 'package:ekko/infrastructure/navigation/routes.dart';
+import 'package:ekko/initializer.dart';
 import 'package:ekko/presentation/shared/loading/loading.controller.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,12 @@ class HomeController extends GetxController {
       time: const Duration(milliseconds: 500),
     );
     ever<bool>(showOnlyFavs, (_) => getUsers());
+    ever<bool>(
+      Initializer.isConnected,
+      (val) => toogleConnection(isConnected: val),
+    );
+
+    toogleConnection(isConnected: Initializer.isConnected.value);
   }
 
   @override
@@ -85,5 +92,12 @@ class HomeController extends GetxController {
 
   void toogleShowOnlyFavs() {
     showOnlyFavs.value = !showOnlyFavs.value;
+  }
+
+  void toogleConnection({required bool isConnected}) {
+    if (!isConnected) {
+      showOnlyFavs.value = true;
+      getUsers();
+    }
   }
 }

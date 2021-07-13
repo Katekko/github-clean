@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,8 @@ import 'objectbox.g.dart';
 import 'presentation/shared/loading/loading.controller.dart';
 
 class Initializer {
+  static final isConnected = true.obs;
+
   static Future<void> init() async {
     try {
       WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +24,7 @@ class Initializer {
       _initGlobalLoading();
       _initScreenPreference();
       await _initObjectBox();
+      await _initConnectivity();
     } catch (err) {
       rethrow;
     }
@@ -87,5 +91,15 @@ class Initializer {
   static Future<void> _initObjectBox() async {
     final store = await openStore();
     Get.put(store);
+  }
+
+  static Future<void> _initConnectivity() async {
+    final connectivity = Connectivity();
+    connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      isConnected.value = result != ConnectivityResult.none;
+    });
+
+    final result = await connectivity.checkConnectivity();
+    isConnected.value = result != ConnectivityResult.none;
   }
 }

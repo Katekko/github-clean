@@ -24,6 +24,7 @@ dependencies:
   shimmer: ^2.0.0
   objectbox: ^1.1.1
   objectbox_flutter_libs: ^1.1.1
+  connectivity_plus: ^1.0.5
 
 dev_dependencies:
   flutter_test:
