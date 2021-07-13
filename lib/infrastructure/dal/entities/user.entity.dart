@@ -6,7 +6,7 @@ class UserEntity implements IBaseEntity {
   @override
   int id;
 
-  @override
+  @Unique()
   int serverId;
 
   final String login, picture;

@@ -12,6 +12,7 @@ import 'package:logger/logger.dart';
 import 'config.dart';
 import 'domain/core/constants/storage.constants.dart';
 
+import 'infrastructure/dal/entities/user_profile.entity.dart';
 import 'objectbox.g.dart';
 import 'presentation/shared/loading/loading.controller.dart';
 
@@ -99,6 +100,7 @@ class Initializer {
   static Future<void> _initDatabase() async {
     await _initObjectBox();
     Get.lazyPut<IDatabase<UserEntity>>(() => ObjectBox());
+    Get.create<IDatabase<UserProfileEntity>>(() => ObjectBox());
   }
 
   static Future<void> _initConnectivity() async {

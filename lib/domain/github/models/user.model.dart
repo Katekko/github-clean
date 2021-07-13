@@ -31,17 +31,17 @@ class UserModel {
     );
   }
 
-  factory UserModel.fromDao(UserEntity dao) {
+  factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
-      localId: dao.id,
-      serverId: dao.serverId,
-      login: dao.login,
-      picture: dao.picture,
-      isFav: dao.isFav.obs,
+      localId: entity.id,
+      serverId: entity.serverId,
+      login: entity.login,
+      picture: entity.picture,
+      isFav: entity.isFav.obs,
     );
   }
 
-  UserEntity get toEntity {
+  UserEntity get toUserEntity {
     return UserEntity(
       id: localId,
       serverId: serverId,
@@ -53,7 +53,7 @@ class UserModel {
 
   void save() {
     final userEntity = Get.find<IDatabase<UserEntity>>();
-    final entity = toEntity;
+    final entity = toUserEntity;
     if (isFav.value) {
       final id = userEntity.save(entity);
       localId = id;

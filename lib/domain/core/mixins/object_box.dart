@@ -45,6 +45,7 @@ class ObjectBox<T extends IBaseEntity> implements IDatabase<T> {
       final builder = _box<T>().query(condition);
       final query = builder.build();
       final daos = query.find();
+      query.close();
       return daos;
     } catch (err) {
       rethrow;
