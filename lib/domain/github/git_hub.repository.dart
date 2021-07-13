@@ -23,7 +23,7 @@ class GitHubRepository {
       if (onlyFavs) {
         late List<UserEntity> daos;
         if (searchText.isNotEmpty) {
-          daos = _userDao.getByLogin(login: searchText);
+          daos = _userDao.getByLogin(searchText);
         } else {
           daos = _userDao.getAll();
         }

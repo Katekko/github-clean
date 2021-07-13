@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ekko/domain/core/abstractions/daos/user_dao.interface.dart';
 import 'package:ekko/domain/core/abstractions/database.interface.dart';
 import 'package:ekko/domain/core/mixins/object_box.dart';
 import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
@@ -12,6 +13,7 @@ import 'package:logger/logger.dart';
 import 'config.dart';
 import 'domain/core/constants/storage.constants.dart';
 
+import 'infrastructure/dal/daos/user.dao.dart';
 import 'infrastructure/dal/entities/user_profile.entity.dart';
 import 'objectbox.g.dart';
 import 'presentation/shared/loading/loading.controller.dart';
@@ -100,7 +102,9 @@ class Initializer {
   static Future<void> _initDatabase() async {
     await _initObjectBox();
     Get.lazyPut<IDatabase<UserEntity>>(() => ObjectBox());
-    Get.create<IDatabase<UserProfileEntity>>(() => ObjectBox());
+    Get.lazyPut<IDatabase<UserProfileEntity>>(() => ObjectBox());
+
+    Get.lazyPut<IUserDao>(() => UserDao());
   }
 
   static Future<void> _initConnectivity() async {

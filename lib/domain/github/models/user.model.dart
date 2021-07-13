@@ -1,7 +1,5 @@
-import 'package:ekko/domain/core/abstractions/database.interface.dart';
-import 'package:ekko/infrastructure/dal/daos/user.dao.dart';
+import 'package:ekko/domain/core/abstractions/daos/user_dao.interface.dart';
 import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
-import 'package:ekko/objectbox.g.dart';
 import 'package:get/get.dart';
 import 'package:github/github.dart';
 
@@ -19,16 +17,15 @@ class UserModel {
   });
 
   factory UserModel.fromData(User data) {
-    final userDao = Get.find<IDatabase<UserEntity>>();
-    final list = userDao.select(UserEntity_.serverId.equals(data.id!));
-    final dao = list.isNotEmpty ? list.first : null;
+    final userDao = Get.find<IUserDao>();
+    final userEntity = userDao.getByServerId(data.id!);
 
     return UserModel(
-      localId: dao?.id ?? 0,
+      localId: userEntity?.id ?? 0,
       serverId: data.id!,
       login: data.login!,
       picture: data.avatarUrl!,
-      isFav: dao?.isFav.obs ?? false.obs,
+      isFav: userEntity?.isFav.obs ?? false.obs,
     );
   }
 
@@ -53,12 +50,12 @@ class UserModel {
   }
 
   void save() {
-    final userDao = UserDao();
+    final userDao = Get.find<IUserDao>();
     if (isFav.value) {
-      final id = userDao.save(user: toUserEntity);
+      final id = userDao.save(toUserEntity);
       localId = id;
     } else {
-      userDao.delete(user: toUserEntity);
+      userDao.delete(toUserEntity);
     }
   }
 }
