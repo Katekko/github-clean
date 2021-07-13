@@ -8,6 +8,15 @@ class UserProfileDao extends IUserProfileDao<UserProfileEntity> {
   @override
   UserProfileEntity? getByServerId(int serverId) {
     final dao = Get.find<IDatabase<UserProfileEntity>>();
-    // return dao.selectUnique(UserProfileEntity_.serverId.equals(serverId));
+    final builder = dao.getQueryBuilder();
+    builder.link(
+      UserProfileEntity_.user,
+      UserEntity_.serverId.equals(serverId),
+    );
+
+    final query = builder.build();
+    final profile = query.findFirst();
+    query.close();
+    return profile;
   }
 }

@@ -77,4 +77,9 @@ class ObjectBox<T extends IBaseEntity> implements IDatabase<T> {
 
   @override
   void clear() => _box<T>().removeAll();
+
+  @override
+  QueryBuilder<T> getQueryBuilder({Condition<T>? condition}) {
+    return _box<T>().query(condition);
+  }
 }

@@ -10,4 +10,5 @@ abstract class IDatabase<T extends IBaseEntity> {
 
   List<T> select(Condition<T>? condition);
   T? selectUnique(Condition<T>? condition);
+  QueryBuilder<T> getQueryBuilder({Condition<T>? condition});
 }
