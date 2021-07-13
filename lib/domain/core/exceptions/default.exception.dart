@@ -7,7 +7,7 @@ class DefaultException implements Exception {
     this.message = 'Erro ao carregar dados, verifique sua internet!',
     this.stackTrace,
   }) {
-    Logger().e(stackTrace);
+    if (stackTrace != null) Logger().e(stackTrace);
   }
 
   @override

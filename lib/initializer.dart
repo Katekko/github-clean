@@ -109,5 +109,7 @@ class Initializer {
 
     final result = await connectivity.checkConnectivity();
     isConnected.value = result != ConnectivityResult.none;
+
+    Get.put(Connectivity());
   }
 }

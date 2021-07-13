@@ -1,14 +1,7 @@
-import 'package:logger/logger.dart';
+import 'package:ekko/domain/core/exceptions/default.exception.dart';
 
-class InternetFailedException implements Exception {
-  final String message;
-
+class InternetFailedException extends DefaultException {
   InternetFailedException({
-    this.message = 'Falha ao conectar com o servidor!',
-  }) {
-    Logger().w(message);
-  }
-
-  @override
-  String toString() => message;
+    String message = 'Falha na conexão, verifique sua internet!',
+  }) : super(message: message);
 }

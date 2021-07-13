@@ -28,6 +28,7 @@ class UserDialogController extends GetxController {
       );
       user.value = response;
     } catch (err) {
+      Get.back();
       SnackbarUtil.showError(message: err.toString());
       rethrow;
     }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ekko/domain/core/utils/connection.util.dart';
 import 'package:get/get.dart';
 import 'package:github/github.dart';
 
@@ -8,6 +9,7 @@ class GitHubService {
 
   Future<List<User>> getUsers({required String term, required int page}) async {
     try {
+      await ConnectionUtil.verifyConnection();
       final users = <User>[];
       if (term.isNotEmpty) {
         await for (final user in _gitHub.search.users(term, pages: 1)) {
@@ -32,6 +34,7 @@ class GitHubService {
 
   Future<User> getUserByLogin({required String login}) async {
     try {
+      await ConnectionUtil.verifyConnection();
       final response = await _gitHub.users.getUser(login);
       return response;
     } catch (err) {
