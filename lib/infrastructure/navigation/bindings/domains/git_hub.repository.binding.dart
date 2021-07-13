@@ -1,4 +1,5 @@
 import 'package:ekko/domain/github/git_hub.repository.dart';
+import 'package:ekko/infrastructure/dal/daos/user.dao.dart';
 import 'package:ekko/infrastructure/dal/services/github/git_hub.service.dart';
 
 class GitHubRepositoryBinding {
@@ -7,6 +8,10 @@ class GitHubRepositoryBinding {
 
   GitHubRepositoryBinding() {
     final gitHubService = GitHubService();
-    _gitHubRepository = GitHubRepository(gitHubService: gitHubService);
+    final userDao = UserDao();
+    _gitHubRepository = GitHubRepository(
+      gitHubService: gitHubService,
+      userDao: userDao,
+    );
   }
 }

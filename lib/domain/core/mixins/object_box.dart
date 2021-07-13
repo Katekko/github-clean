@@ -44,9 +44,22 @@ class ObjectBox<T extends IBaseEntity> implements IDatabase<T> {
     try {
       final builder = _box<T>().query(condition);
       final query = builder.build();
-      final daos = query.find();
+      final entities = query.find();
       query.close();
-      return daos;
+      return entities;
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  @override
+  T? selectUnique(Condition<T>? condition) {
+    try {
+      final builder = _box<T>().query(condition);
+      final query = builder.build();
+      final entity = query.findFirst();
+      query.close();
+      return entity;
     } catch (err) {
       rethrow;
     }

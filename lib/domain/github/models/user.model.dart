@@ -1,4 +1,5 @@
 import 'package:ekko/domain/core/abstractions/database.interface.dart';
+import 'package:ekko/infrastructure/dal/daos/user.dao.dart';
 import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
 import 'package:ekko/objectbox.g.dart';
 import 'package:get/get.dart';
@@ -52,13 +53,12 @@ class UserModel {
   }
 
   void save() {
-    final userEntity = Get.find<IDatabase<UserEntity>>();
-    final entity = toUserEntity;
+    final userDao = UserDao();
     if (isFav.value) {
-      final id = userEntity.save(entity);
+      final id = userDao.save(user: toUserEntity);
       localId = id;
     } else {
-      userEntity.remove(entity);
+      userDao.delete(user: toUserEntity);
     }
   }
 }

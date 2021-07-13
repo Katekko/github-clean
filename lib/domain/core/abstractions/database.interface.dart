@@ -9,4 +9,5 @@ abstract class IDatabase<T extends IBaseEntity> {
   void clear();
 
   List<T> select(Condition<T>? condition);
+  T? selectUnique(Condition<T>? condition);
 }

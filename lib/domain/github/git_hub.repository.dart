@@ -1,19 +1,18 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:ekko/domain/core/abstractions/database.interface.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
+import 'package:ekko/infrastructure/dal/daos/user.dao.dart';
 import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
-import 'package:ekko/infrastructure/dal/entities/user_profile.entity.dart';
 import 'package:ekko/infrastructure/dal/services/github/git_hub.service.dart';
-import 'package:ekko/objectbox.g.dart';
-import 'package:get/get.dart';
-
 import 'models/user_profile.model.dart';
 
 class GitHubRepository {
   final GitHubService _gitHubService;
+  final UserDao _userDao;
 
-  GitHubRepository({required GitHubService gitHubService})
-      : _gitHubService = gitHubService;
+  GitHubRepository({
+    required GitHubService gitHubService,
+    required UserDao userDao,
+  })  : _gitHubService = gitHubService,
+        _userDao = userDao;
 
   Future<List<UserModel>> getUsers({
     required String searchText,
@@ -21,15 +20,12 @@ class GitHubRepository {
     required bool onlyFavs,
   }) async {
     try {
-      final userDao = Get.find<IDatabase<UserEntity>>();
       if (onlyFavs) {
         late List<UserEntity> daos;
         if (searchText.isNotEmpty) {
-          daos = userDao.select(
-            UserEntity_.login.contains(searchText, caseSensitive: false),
-          );
+          daos = _userDao.getByLogin(login: searchText);
         } else {
-          daos = userDao.selectAll();
+          daos = _userDao.getAll();
         }
 
         final models = daos.map((e) => UserModel.fromEntity(e)).toList();
@@ -49,25 +45,24 @@ class GitHubRepository {
 
   Future<UserProfileModel> getUserByLogin({required String login}) async {
     try {
-      final connectivity = Get.find<Connectivity>();
-      final result = await connectivity.checkConnectivity();
-      if (result == ConnectivityResult.none) {
-        final userDao = Get.find<IDatabase<UserEntity>>();
-        final userProfileDao = Get.find<IDatabase<UserProfileEntity>>();
-        final user = userDao.select(UserEntity_.login.equals(login)).first;
-        final profileEntity = userProfileDao
-            .select(
-              UserProfileEntity_.id.equals(user.id),
-            )
-            .first;
+      // final connectivity = Get.find<Connectivity>();
+      // final result = await connectivity.checkConnectivity();
+      // if (result == ConnectivityResult.none) {
+      // final userProfileDao = Get.find<IDatabase<UserProfileEntity>>();
+      // final user = userDao.select(UserEntity_.login.equals(login)).first;
+      // final profileEntity = userProfileDao
+      //     .select(
+      //       UserProfileEntity_.id.equals(user.id),
+      //     )
+      //     .first;
 
-        final model = UserProfileModel.fromEntity(profileEntity);
-        return model;
-      } else {
-        final response = await _gitHubService.getUserByLogin(login: login);
-        final model = UserProfileModel.fromData(response);
-        return model;
-      }
+      // final model = UserProfileModel.fromEntity(profileEntity);
+      // return model;
+      // } else {
+      final response = await _gitHubService.getUserByLogin(login: login);
+      final model = UserProfileModel.fromData(response);
+      return model;
+      // }
     } catch (err) {
       rethrow;
     }
