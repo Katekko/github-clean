@@ -6,6 +6,21 @@ import 'package:get/get.dart';
 
 class UserProfileDao extends IUserProfileDao<UserProfileEntity> {
   @override
+  UserProfileEntity? getByLogin(String login) {
+    final dao = Get.find<IDatabase<UserProfileEntity>>();
+    final builder = dao.getQueryBuilder();
+    builder.link(
+      UserProfileEntity_.user,
+      UserEntity_.login.equals(login),
+    );
+
+    final query = builder.build();
+    final profile = query.findFirst();
+    query.close();
+    return profile;
+  }
+
+  @override
   UserProfileEntity? getByServerId(int serverId) {
     final dao = Get.find<IDatabase<UserProfileEntity>>();
     final builder = dao.getQueryBuilder();

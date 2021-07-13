@@ -7,6 +7,6 @@ abstract class IUserDao<T extends IBaseEntity> extends IBaseDao<T> {
   /// Get a list of users filtering by login
   List<UserEntity> getByLogin(String login);
 
-  /// Get a list of users filtering by login
+  /// Get user filtering by login
   UserEntity? getByServerId(int serverId);
 }
