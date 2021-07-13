@@ -11,9 +11,11 @@ import 'package:github/github.dart';
 import 'package:logger/logger.dart';
 
 import 'config.dart';
+import 'domain/core/abstractions/daos/user_profile_dao.interface.dart';
 import 'domain/core/constants/storage.constants.dart';
 
 import 'infrastructure/dal/daos/user.dao.dart';
+import 'infrastructure/dal/daos/user_profile.dao.dart';
 import 'infrastructure/dal/entities/user_profile.entity.dart';
 import 'objectbox.g.dart';
 import 'presentation/shared/loading/loading.controller.dart';
@@ -101,10 +103,14 @@ class Initializer {
 
   static Future<void> _initDatabase() async {
     await _initObjectBox();
+
+    // Entities
     Get.lazyPut<IDatabase<UserEntity>>(() => ObjectBox());
     Get.lazyPut<IDatabase<UserProfileEntity>>(() => ObjectBox());
 
+    // DAOs
     Get.lazyPut<IUserDao>(() => UserDao());
+    Get.lazyPut<IUserProfileDao>(() => UserProfileDao());
   }
 
   static Future<void> _initConnectivity() async {

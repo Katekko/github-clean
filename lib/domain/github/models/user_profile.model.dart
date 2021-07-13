@@ -1,8 +1,6 @@
-import 'package:ekko/domain/core/abstractions/database.interface.dart';
+import 'package:ekko/domain/core/abstractions/daos/user_profile_dao.interface.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
-import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
 import 'package:ekko/infrastructure/dal/entities/user_profile.entity.dart';
-import 'package:ekko/objectbox.g.dart';
 import 'package:get/get.dart';
 import 'package:github/github.dart';
 
@@ -28,20 +26,19 @@ class UserProfileModel extends UserModel {
         );
 
   factory UserProfileModel.fromData(User data) {
-    final userDao = Get.find<IDatabase<UserEntity>>();
-    final list = userDao.select(UserEntity_.serverId.equals(data.id!));
-    final dao = list.isNotEmpty ? list.first : null;
+    final dao = Get.find<IUserProfileDao>();
+    final entity = dao.getByServerId(data.id!);
 
     return UserProfileModel(
       serverId: data.id!,
-      localId: dao?.id ?? 0,
+      localId: entity?.id ?? 0,
       login: data.login!,
       picture: data.avatarUrl!,
       location: data.location,
       nickname: data.name,
       bio: data.bio,
       email: data.email,
-      isFav: dao?.isFav.obs ?? false.obs,
+      isFav: entity?.user.target?.isFav.obs ?? false.obs,
     );
   }
 
@@ -71,14 +68,13 @@ class UserProfileModel extends UserModel {
 
   @override
   void save() {
-    final userEntity = Get.find<IDatabase<UserProfileEntity>>();
-    final entity = toUserProfileEntity;
+    final dao = Get.find<IUserProfileDao>();
     if (isFav.value) {
-      entity.user.target = toUserEntity;
-      final id = userEntity.save(entity);
+      toUserProfileEntity.user.target = toUserEntity;
+      final id = dao.save(toUserProfileEntity);
       localId = id;
     } else {
-      userEntity.remove(entity);
+      dao.delete(toUserProfileEntity);
     }
 
     super.save();
