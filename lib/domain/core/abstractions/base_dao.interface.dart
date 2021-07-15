@@ -9,6 +9,12 @@ abstract class IBaseDao<T extends IBaseEntity> {
     return dao.selectAll();
   }
 
+  /// Get entity by local id
+  T? getByLocalId(int id) {
+    final dao = Get.find<IDatabase<T>>();
+    return dao.selectByLocalId(id);
+  }
+
   /// Save the entity and return ID when successfully
   int save(T entity) {
     final dao = Get.find<IDatabase<T>>();

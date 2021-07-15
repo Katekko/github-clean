@@ -23,6 +23,7 @@ class UserProfileDao extends IUserProfileDao<UserProfileEntity> {
   @override
   UserProfileEntity? getByServerId(int serverId) {
     final dao = Get.find<IDatabase<UserProfileEntity>>();
+    final selectall = dao.selectAll();
     final builder = dao.getQueryBuilder();
     builder.link(
       UserProfileEntity_.user,

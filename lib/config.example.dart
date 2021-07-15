@@ -25,7 +25,7 @@ class ConfigEnvironments {
     },
     {
       'env': Environments.PRODUCTION,
-      'url': 'https://api-ekko.herokuapp.com/api/',
+      'url': '',
       'token-git': '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',
     },
   ];

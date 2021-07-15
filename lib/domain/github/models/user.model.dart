@@ -17,7 +17,7 @@ class UserModel {
   });
 
   factory UserModel.fromData(User data) {
-    final userDao = Get.find<IUserDao>();
+    final userDao = Get.find<IUserDao<UserEntity>>();
     final userEntity = userDao.getByServerId(data.id!);
 
     return UserModel(
@@ -50,7 +50,7 @@ class UserModel {
   }
 
   void save() {
-    final userDao = Get.find<IUserDao>();
+    final userDao = Get.find<IUserDao<UserEntity>>();
     if (isFav.value) {
       final id = userDao.save(toUserEntity);
       localId = id;

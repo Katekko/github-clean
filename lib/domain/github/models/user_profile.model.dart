@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:github/github.dart';
 
 class UserProfileModel extends UserModel {
+  int localProfileId;
   final String? bio, email, location, nickname;
 
   UserProfileModel({
@@ -13,6 +14,7 @@ class UserProfileModel extends UserModel {
     required String login,
     required String picture,
     required RxBool isFav,
+    required this.localProfileId,
     required this.email,
     required this.bio,
     required this.location,
@@ -26,12 +28,13 @@ class UserProfileModel extends UserModel {
         );
 
   factory UserProfileModel.fromData(User data) {
-    final dao = Get.find<IUserProfileDao>();
+    final dao = Get.find<IUserProfileDao<UserProfileEntity>>();
     final entity = dao.getByServerId(data.id!);
 
     return UserProfileModel(
       serverId: data.id!,
-      localId: entity?.id ?? 0,
+      localProfileId: entity?.id ?? 0,
+      localId: entity?.user.targetId ?? 0,
       login: data.login!,
       picture: data.avatarUrl!,
       location: data.location,
@@ -44,7 +47,8 @@ class UserProfileModel extends UserModel {
 
   factory UserProfileModel.fromEntity(UserProfileEntity entity) {
     return UserProfileModel(
-      localId: entity.id,
+      localId: entity.user.targetId,
+      localProfileId: entity.id,
       bio: entity.bio,
       email: entity.email,
       location: entity.location,
@@ -58,7 +62,7 @@ class UserProfileModel extends UserModel {
 
   UserProfileEntity get toUserProfileEntity {
     return UserProfileEntity(
-      id: localId,
+      id: localProfileId,
       bio: bio,
       email: email,
       location: location,
@@ -68,15 +72,17 @@ class UserProfileModel extends UserModel {
 
   @override
   void save() {
-    final dao = Get.find<IUserProfileDao>();
+    final dao = Get.find<IUserProfileDao<UserProfileEntity>>();
     if (isFav.value) {
       toUserProfileEntity.user.target = toUserEntity;
+
       final id = dao.save(toUserProfileEntity);
-      localId = id;
+      localProfileId = id;
+
+      final userProfile = dao.getByLocalId(id);
+      print(userProfile?.user.target?.login);
     } else {
       dao.delete(toUserProfileEntity);
     }
-
-    super.save();
   }
 }
