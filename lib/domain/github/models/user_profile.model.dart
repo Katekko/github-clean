@@ -1,5 +1,7 @@
+import 'package:ekko/domain/core/abstractions/daos/user_dao.interface.dart';
 import 'package:ekko/domain/core/abstractions/daos/user_profile_dao.interface.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
+import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
 import 'package:ekko/infrastructure/dal/entities/user_profile.entity.dart';
 import 'package:get/get.dart';
 import 'package:github/github.dart';
@@ -72,17 +74,17 @@ class UserProfileModel extends UserModel {
 
   @override
   void save() {
-    final dao = Get.find<IUserProfileDao<UserProfileEntity>>();
+    final userDao = Get.find<IUserDao<UserEntity>>();
+    final profileDao = Get.find<IUserProfileDao<UserProfileEntity>>();
     if (isFav.value) {
-      toUserProfileEntity.user.target = toUserEntity;
+      final profile = toUserProfileEntity;
+      profile.user.target = toUserEntity;
 
-      final id = dao.save(toUserProfileEntity);
+      final id = profileDao.save(profile);
       localProfileId = id;
-
-      final userProfile = dao.getByLocalId(id);
-      print(userProfile?.user.target?.login);
     } else {
-      dao.delete(toUserProfileEntity);
+      profileDao.delete(toUserProfileEntity);
+      userDao.delete(toUserEntity);
     }
   }
 }

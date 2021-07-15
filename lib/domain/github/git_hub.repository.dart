@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ekko/domain/core/abstractions/daos/user_profile_dao.interface.dart';
+import 'package:ekko/domain/core/abstractions/repositories/github_repository.interface.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
 import 'package:ekko/infrastructure/dal/daos/user.dao.dart';
 import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
@@ -7,7 +8,7 @@ import 'package:ekko/infrastructure/dal/services/github/git_hub.service.dart';
 import 'package:get/get.dart';
 import 'models/user_profile.model.dart';
 
-class GitHubRepository {
+class GitHubRepository implements IGitHubRepository {
   final GitHubService _gitHubService;
   final UserDao _userDao;
 
@@ -17,6 +18,7 @@ class GitHubRepository {
   })  : _gitHubService = gitHubService,
         _userDao = userDao;
 
+  @override
   Future<List<UserModel>> getUsers({
     required String searchText,
     required int page,
@@ -46,6 +48,7 @@ class GitHubRepository {
     }
   }
 
+  @override
   Future<UserProfileModel> getUserByLogin({required String login}) async {
     try {
       final connectivity = Get.find<Connectivity>();
@@ -65,6 +68,7 @@ class GitHubRepository {
     }
   }
 
+  @override
   Future<void> toogleFavUser({required UserModel user}) async {
     try {
       user.isFav.value = !user.isFav.value;

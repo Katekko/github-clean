@@ -1,5 +1,5 @@
+import 'package:ekko/domain/core/abstractions/repositories/github_repository.interface.dart';
 import 'package:ekko/domain/core/utils/snackbar.util.dart';
-import 'package:ekko/domain/github/git_hub.repository.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
 import 'package:ekko/infrastructure/navigation/routes.dart';
 import 'package:ekko/initializer.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  final GitHubRepository _gitHubRepository;
+  final IGitHubRepository _gitHubRepository;
   final _loading = Get.find<LoadingController>();
   final users = <UserModel>[].obs;
   final searchMode = false.obs;
@@ -20,7 +20,7 @@ class HomeController extends GetxController {
 
   final showOnlyFavs = false.obs;
 
-  HomeController({required GitHubRepository gitHubRepository})
+  HomeController({required IGitHubRepository gitHubRepository})
       : _gitHubRepository = gitHubRepository;
 
   @override
