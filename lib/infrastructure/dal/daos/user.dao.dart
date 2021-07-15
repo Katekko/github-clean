@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 
 class UserDao extends IUserDao<UserEntity> {
   @override
-  List<UserEntity> getByLogin(String login) {
+  List<UserEntity> searchByLogin(String searchText) {
     final userDao = Get.find<IDatabase<UserEntity>>();
     return userDao.select(
-      UserEntity_.login.contains(login, caseSensitive: false),
+      UserEntity_.login.contains(searchText, caseSensitive: false),
     );
   }
 
@@ -17,5 +17,13 @@ class UserDao extends IUserDao<UserEntity> {
   UserEntity? getByServerId(int serverId) {
     final userDao = Get.find<IDatabase<UserEntity>>();
     return userDao.selectUnique(UserEntity_.serverId.equals(serverId));
+  }
+
+  @override
+  UserEntity? getByLogin(String login) {
+    final userDao = Get.find<IDatabase<UserEntity>>();
+    return userDao.selectUnique(
+      UserEntity_.login.contains(login, caseSensitive: false),
+    );
   }
 }

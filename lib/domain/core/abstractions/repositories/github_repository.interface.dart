@@ -8,7 +8,7 @@ abstract class IGitHubRepository {
     required bool onlyFavs,
   });
 
-  Future<UserProfileModel> getUserByLogin({required String login});
+  Future<UserProfileModel> getUserProfileByLogin({required String login});
 
   Future<void> toogleFavUser({required UserModel user});
 }

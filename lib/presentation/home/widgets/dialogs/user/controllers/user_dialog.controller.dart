@@ -23,7 +23,7 @@ class UserDialogController extends GetxController {
 
   Future<void> getUserByLogin() async {
     try {
-      final response = await _gitHubRepository.getUserByLogin(
+      final response = await _gitHubRepository.getUserProfileByLogin(
         login: _userLogin,
       );
       user.value = response;

@@ -10,8 +10,11 @@ class NicknameWidget extends GetView<UserDialogController> {
     return Obx(
       () {
         final user = controller.user.value;
-        if (user != null && user.nickname != null) {
-          return Text(user.nickname!, style: Get.textTheme.headline5);
+        if (user != null) {
+          return Text(
+            user.nickname ?? user.login,
+            style: Get.textTheme.headline5,
+          );
         } else {
           return const SizedBox();
         }

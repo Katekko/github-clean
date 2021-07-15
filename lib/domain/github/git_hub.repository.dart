@@ -1,9 +1,11 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ekko/domain/core/abstractions/daos/user_dao.interface.dart';
 import 'package:ekko/domain/core/abstractions/daos/user_profile_dao.interface.dart';
 import 'package:ekko/domain/core/abstractions/repositories/github_repository.interface.dart';
 import 'package:ekko/domain/github/models/user.model.dart';
 import 'package:ekko/infrastructure/dal/daos/user.dao.dart';
 import 'package:ekko/infrastructure/dal/entities/user.entity.dart';
+import 'package:ekko/infrastructure/dal/entities/user_profile.entity.dart';
 import 'package:ekko/infrastructure/dal/services/github/git_hub.service.dart';
 import 'package:get/get.dart';
 import 'models/user_profile.model.dart';
@@ -28,7 +30,7 @@ class GitHubRepository implements IGitHubRepository {
       if (onlyFavs) {
         late List<UserEntity> daos;
         if (searchText.isNotEmpty) {
-          daos = _userDao.getByLogin(searchText);
+          daos = _userDao.searchByLogin(searchText);
         } else {
           daos = _userDao.getAll();
         }
@@ -49,14 +51,24 @@ class GitHubRepository implements IGitHubRepository {
   }
 
   @override
-  Future<UserProfileModel> getUserByLogin({required String login}) async {
+  Future<UserProfileModel> getUserProfileByLogin({
+    required String login,
+  }) async {
     try {
       final connectivity = Get.find<Connectivity>();
       final result = await connectivity.checkConnectivity();
       if (result == ConnectivityResult.none) {
-        final dao = Get.find<IUserProfileDao>();
-        final entity = dao.getByLogin(login);
-        final model = UserProfileModel.fromEntity(entity!);
+        final profileDao = Get.find<IUserProfileDao<UserProfileEntity>>();
+        final profileEntity = profileDao.getByLogin(login);
+
+        late UserProfileModel model;
+        if (profileEntity != null) {
+          model = UserProfileModel.fromEntity(profileEntity);
+        } else {
+          final userDao = Get.find<IUserDao<UserEntity>>();
+          final userEntity = userDao.getByLogin(login);
+          model = UserProfileModel.fromUserEntity(userEntity!);
+        }
         return model;
       } else {
         final response = await _gitHubService.getUserByLogin(login: login);

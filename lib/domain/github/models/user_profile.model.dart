@@ -62,6 +62,21 @@ class UserProfileModel extends UserModel {
     );
   }
 
+  factory UserProfileModel.fromUserEntity(UserEntity entity) {
+    return UserProfileModel(
+      localId: entity.id,
+      localProfileId: 0,
+      serverId: entity.serverId,
+      isFav: entity.isFav.obs,
+      login: entity.login,
+      picture: entity.picture,
+      bio: null,
+      email: null,
+      location: null,
+      nickname: null,
+    );
+  }
+
   UserProfileEntity get toUserProfileEntity {
     return UserProfileEntity(
       id: localProfileId,
@@ -83,7 +98,9 @@ class UserProfileModel extends UserModel {
       final id = profileDao.save(profile);
       localProfileId = id;
     } else {
-      profileDao.delete(toUserProfileEntity);
+      if (localProfileId != 0) {
+        profileDao.delete(toUserProfileEntity);
+      }
       userDao.delete(toUserEntity);
     }
   }
