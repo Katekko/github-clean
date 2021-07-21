@@ -24,7 +24,7 @@ class UserListItemWidget extends GetView<HomeController> {
       ),
       trailing: FavButtonWidget(
         isFav: user.isFav,
-        onTap: () => controller.toogleFavUser(user),
+        onTap: () => controller.toggleFavUser(user),
       ),
       title: Text(user.login),
     );

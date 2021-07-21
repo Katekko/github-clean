@@ -34,10 +34,10 @@ class HomeController extends GetxController {
     ever<bool>(showOnlyFavs, (_) => getUsers());
     ever<bool>(
       Initializer.isConnected,
-      (val) => toogleConnection(isConnected: val),
+      (val) => toggleConnection(isConnected: val),
     );
 
-    toogleConnection(isConnected: Initializer.isConnected.value);
+    toggleConnection(isConnected: Initializer.isConnected.value);
   }
 
   @override
@@ -85,16 +85,22 @@ class HomeController extends GetxController {
     getUsers();
   }
 
-  void toogleFavUser(UserModel user) {
-    _gitHubRepository.toogleFavUser(user: user);
-    getUsers();
+  Future<void> toggleFavUser(UserModel user) async {
+    try {
+      _loading.isLoading = true;
+      await _gitHubRepository.toggleFavUser(user: user);
+    } catch (err) {
+      rethrow;
+    } finally {
+      getUsers();
+    }
   }
 
   void toogleShowOnlyFavs() {
     showOnlyFavs.value = !showOnlyFavs.value;
   }
 
-  void toogleConnection({required bool isConnected}) {
+  void toggleConnection({required bool isConnected}) {
     if (!isConnected) {
       showOnlyFavs.value = true;
       getUsers();

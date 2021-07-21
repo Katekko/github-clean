@@ -10,5 +10,5 @@ abstract class IGitHubRepository {
 
   Future<UserProfileModel> getUserProfileByLogin({required String login});
 
-  Future<void> toogleFavUser({required UserModel user});
+  Future<void> toggleFavUser({required UserModel user});
 }

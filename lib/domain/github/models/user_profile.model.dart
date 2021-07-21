@@ -92,16 +92,16 @@ class UserProfileModel extends UserModel {
     final userDao = Get.find<IUserDao<UserEntity>>();
     final profileDao = Get.find<IUserProfileDao<UserProfileEntity>>();
     if (isFav.value) {
+      final user = toUserEntity;
       final profile = toUserProfileEntity;
-      profile.user.target = toUserEntity;
+      profile.user.target = user;
 
       final id = profileDao.save(profile);
       localProfileId = id;
+      localId = profile.user.targetId;
     } else {
-      if (localProfileId != 0) {
-        profileDao.delete(toUserProfileEntity);
-      }
       userDao.delete(toUserEntity);
+      profileDao.delete(toUserProfileEntity);
     }
   }
 }

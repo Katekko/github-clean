@@ -57,7 +57,11 @@ class GitHubRepository implements IGitHubRepository {
     try {
       final connectivity = Get.find<Connectivity>();
       final result = await connectivity.checkConnectivity();
-      if (result == ConnectivityResult.none) {
+      if (result != ConnectivityResult.none) {
+        final response = await _gitHubService.getUserByLogin(login: login);
+        final model = UserProfileModel.fromData(response);
+        return model;
+      } else {
         final profileDao = Get.find<IUserProfileDao<UserProfileEntity>>();
         final profileEntity = profileDao.getByLogin(login);
 
@@ -70,10 +74,6 @@ class GitHubRepository implements IGitHubRepository {
           model = UserProfileModel.fromUserEntity(userEntity!);
         }
         return model;
-      } else {
-        final response = await _gitHubService.getUserByLogin(login: login);
-        final model = UserProfileModel.fromData(response);
-        return model;
       }
     } catch (err) {
       rethrow;
@@ -81,10 +81,20 @@ class GitHubRepository implements IGitHubRepository {
   }
 
   @override
-  Future<void> toogleFavUser({required UserModel user}) async {
+  Future<void> toggleFavUser({required UserModel user}) async {
     try {
+      /// Para ter o feedback instanteneo na tela
       user.isFav.value = !user.isFav.value;
-      user.save();
+
+      late UserProfileModel profile;
+      if (user is UserProfileModel) {
+        profile = user;
+      } else {
+        profile = await getUserProfileByLogin(login: user.login);
+        profile.isFav.value = !profile.isFav.value;
+      }
+
+      profile.save();
     } catch (err) {
       rethrow;
     }
